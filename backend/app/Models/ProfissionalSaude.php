@@ -14,5 +14,6 @@ class ProfissionalSaude extends Model
         'especialidade',
         'telefone',
         'email',
+        'senha'
     ];
 }

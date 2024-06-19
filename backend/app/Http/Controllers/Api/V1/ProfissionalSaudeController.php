@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\ProfissionalSaude;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfissionalSaudeController extends Controller
 {
@@ -21,9 +22,13 @@ class ProfissionalSaudeController extends Controller
             'especialidade' => 'required',
             'telefone' => 'required',
             'email' => 'required',
+            'senha' => 'required|min:8'
         ]);
 
-        $profissionalSaude = ProfissionalSaude::create($request->all());
+        $data = $request->all();
+        $data['senha'] = Hash::make($request->senha);
+
+        $profissionalSaude = ProfissionalSaude::create($data);
 
         return response()->json($profissionalSaude, 201);
     }
@@ -42,10 +47,17 @@ class ProfissionalSaudeController extends Controller
             'especialidade' => 'string',
             'telefone' => 'string',
             'email' => 'string',
+            'senha' => 'string|min=8',
         ]);
 
         $profissionalSaude = ProfissionalSaude::findOrFail($id);
-        $profissionalSaude->update($request->all());
+        $data = $request->all();
+
+        if ($request->has('senha')) {
+            $data['senha'] = Hash::make($request->senha);
+        }
+
+        $profissionalSaude->update($data);
 
         return response()->json($profissionalSaude, 200);
     }
