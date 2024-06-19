@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Api\v1\ResponsavelController;
 use App\Http\Controllers\Api\v1\IdosoController;
 use App\Http\Controllers\api\v1\VacinaController;
@@ -20,4 +19,7 @@ Route::group(['prefix' => 'v1'], function(){
 
 Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('vacinas', VacinaController::class);
+});
+Route::group(['prefix' => 'v1'], function(){
+    Route::apiResource('profissionais', ProfissionalSaudeController::class);
 });
