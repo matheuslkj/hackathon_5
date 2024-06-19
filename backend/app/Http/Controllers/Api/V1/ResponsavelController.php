@@ -1,65 +1,43 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\ResponsaveisCollection;
+use App\Http\Resources\V1\ResponsaveisResource;
+use App\Models\Responsavel;
 
 use Illuminate\Http\Request;
 
 class ResponsavelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        
+        return new ResponsaveisCollection(Responsavel::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Responsavel::create($request->all());
+        return response()->json("Responsavel Criado");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Responsavel $responsavel)
     {
-        //
+        return new ResponsaveisResource($responsavel);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $responsavel = Responsavel::findOrFail($id);
+        $responsavel->update($request->all());
+
+        return $responsavel;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Responsavel $responsavel)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $responsavel->delete();
+        return response()->json("Responsavel deletado");
     }
 }
