@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ResponsavelController;
+use App\Http\Controllers\api\v1\ResponsavelController;
 use App\Http\Controllers\api\v1\VacinaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
