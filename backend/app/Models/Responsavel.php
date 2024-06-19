@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Responsavel extends Model
 {
     use HasFactory;
+
+    protected $table = 'responsavels';
+    protected $fillable = ['nome', 'cpf', 'telefone', 'endereco', 'id_idoso'];
 }
