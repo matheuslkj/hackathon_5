@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\v1\ProfissionalSaudeController;
 use App\Http\Controllers\ResponsavelController;
 use App\Http\Controllers\api\v1\VacinaController;
 use Illuminate\Http\Request;
@@ -15,4 +16,7 @@ Route::group(['prefix' => 'v1'], function(){
 
 Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('vacinas', VacinaController::class);
+});
+Route::group(['prefix' => 'v1'], function(){
+    Route::apiResource('profissionais', ProfissionalSaudeController::class);
 });
