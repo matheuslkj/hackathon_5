@@ -10,7 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::group(['prefix' => 'v1'], function(){
-    Route::apiResource('responsaveis', ResponsavelController::class);
+    Route::apiResource('responsavels', ResponsavelController::class);
 });
 
 Route::group(['prefix' => 'v1'], function(){
@@ -20,6 +20,6 @@ Route::group(['prefix' => 'v1'], function(){
 Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('vacinas', VacinaController::class);
 });
-Route::group(['prefix' => 'v1'], function(){
-    Route::apiResource('profissionais', ProfissionalSaudeController::class);
-});
+// Route::group(['prefix' => 'v1'], function(){
+//     Route::apiResource('profissionais', ProfissionalSaudeController::class);
+// });
