@@ -19,6 +19,6 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('vacinas', VacinaController::class);
     Route::apiResource('profissionais', ProfissionalSaudeController::class);
     Route::apiResource('agendamentos', AgendamentoController::class);
-    Route::apiResource('alertas', AlertaController::class)->middleware('auth:sanctum');
+    Route::apiResource('alertas', AlertaController::class);
 
 });
