@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\v1\AgendamentoController;
+use App\Http\Controllers\api\v1\AlertaController;
 use App\Http\Controllers\Api\v1\ResponsavelController;
 use App\Http\Controllers\Api\v1\IdosoController;
 use App\Http\Controllers\api\v1\ProfissionalSaudeController;
@@ -18,4 +19,6 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('vacinas', VacinaController::class);
     Route::apiResource('profissionais', ProfissionalSaudeController::class);
     Route::apiResource('agendamentos', AgendamentoController::class);
+    Route::apiResource('alertas', AlertaController::class)->middleware('auth:sanctum');
+
 });

@@ -14,4 +14,9 @@ class Vacina extends Model
         'doses_necessarias',
         'data_campanha'
     ];
+
+    public function alertas()
+    {
+        return $this->hasMany(Alerta::class);
+    }
 }
