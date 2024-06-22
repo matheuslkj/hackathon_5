@@ -3,19 +3,16 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\ResponsaveisCollection;
-use App\Http\Resources\V1\ResponsaveisResource;
 use App\Models\Responsavel;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ResponsavelController extends Controller
 {
     public function index()
     {
-        return response()->json(Responsavel::all(), 200);
+        $responsaveis = Responsavel::all();
+        return response()->json($responsaveis, 200);
     }
 
     public function store(Request $request)
@@ -24,8 +21,9 @@ class ResponsavelController extends Controller
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|unique:responsavels,cpf',
             'telefone' => 'required|string|max:20',
-            'endereco'  => 'required|string',
-            'senha' => 'required|string|min:8'
+            'endereco' => 'required|string',
+            'senha' => 'required|string|min:8',
+            'idoso_id' => 'required|exists:idosos,id'
         ]);
 
         $data = $request->all();
@@ -50,6 +48,7 @@ class ResponsavelController extends Controller
             'telefone' => 'sometimes|string|max:20',
             'endereco' => 'sometimes|string',
             'senha' => 'sometimes|string|min:8',
+            'idoso_id' => 'sometimes|exists:idosos,id'
         ]);
 
         $responsavel = Responsavel::findOrFail($id);

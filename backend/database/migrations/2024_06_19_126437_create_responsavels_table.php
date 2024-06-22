@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('responsavels', function (Blueprint $table) {
@@ -17,13 +14,14 @@ return new class extends Migration
             $table->string('cpf', 11)->unique();
             $table->string('telefone');
             $table->string('endereco');
+            $table->string('senha');
+            $table->unsignedBigInteger('idoso_id');
             $table->timestamps();
+
+            $table->foreign('idoso_id')->references('id')->on('idosos')->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('responsavels');
