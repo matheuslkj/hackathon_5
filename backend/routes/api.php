@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\api\v1\AgendamentoController;
-use App\Http\Controllers\api\v1\AlertaController;
+use App\Http\Controllers\Api\v1\AgendamentoController;
+use App\Http\Controllers\Api\v1\AlertaController;
 use App\Http\Controllers\Api\v1\ResponsavelController;
 use App\Http\Controllers\Api\v1\IdosoController;
-use App\Http\Controllers\api\v1\ProfissionalSaudeController;
-use App\Http\Controllers\api\v1\VacinaController;
+use App\Http\Controllers\Api\v1\ProfissionalSaudeController;
+use App\Http\Controllers\Api\v1\VacinaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
