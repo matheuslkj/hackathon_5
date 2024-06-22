@@ -10,5 +10,5 @@ class Responsavel extends Model
     use HasFactory;
 
     protected $table = 'responsavels';
-    protected $fillable = ['nome', 'cpf', 'telefone', 'endereco', 'id_idoso'];
+    protected $fillable = ['nome', 'cpf', 'senha', 'telefone', 'endereco', 'id_idoso'];
 }
