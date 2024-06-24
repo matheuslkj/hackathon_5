@@ -1,26 +1,34 @@
 {
-  "name": "frontend",
+  "name": "vacithon",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run build:ts",
+    "build:ts": "tsc public/scripts/script.ts --outDir public/scripts",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.4"
+    "@types/jsonwebtoken": "^9.0.6",
+    "axios": "^1.6.8",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "next": "^14.2.4",
+    "nookies": "^2.5.2",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.2",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-input-mask": "^2.0.4"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.4"
+    "@types/react-input-mask": "^3.0.5",
+    "typescript": "^5"
   }
 }

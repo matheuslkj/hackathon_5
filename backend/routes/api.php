@@ -20,5 +20,5 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('profissionais', ProfissionalSaudeController::class);
     Route::apiResource('agendamentos', AgendamentoController::class);
     Route::apiResource('alertas', AlertaController::class);
-    Route::post('responsavels/login', [ResponsavelController::class, 'login']); 
+    Route::post('responsavels/login', [ResponsavelController::class, 'login']);
 });

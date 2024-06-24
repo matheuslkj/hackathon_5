@@ -1,0 +1,126 @@
+.secao {
+    background-image: url('../../../public/images/fundo.jpg');
+    background-size: cover;
+    background-position: 100% 90%;
+    overflow: hidden;
+    max-height: 800px;
+}
+
+.div1 {
+    min-height: 1000px;
+}
+
+.div2 {
+    width: 660px;
+    min-height: 500px;
+    box-shadow: 5px 5px 20px 0 rgba(0,0,0,0.4);
+    margin: 100px auto 60px;
+    text-align: center;
+    display: flex;
+    background-color: #fff;
+    border-radius: 50px;
+}
+
+.div3 {
+    padding: 0 30px 30px;
+    flex: 1;
+}
+
+.div3 h2 {
+    font-size: 40px;
+    margin: 26px auto 0;
+    font-family: sans-serif;
+}
+
+.span {
+    width: 100px;
+    height: 100px;
+    box-shadow: 5px -10px 20px 0 rgba(0,0,0,0.4);
+    margin: -54px auto 0;
+    padding: 20px;
+    background-color: #00337C;
+    display: block;
+    border-radius: 50%;
+}
+
+.imagem {
+    object-fit: contain;
+    width: 80%;
+    height: 100%;
+}
+
+.divForm {
+    width: 570px;
+    margin: 35px auto 0;
+}
+
+.divForm form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-left: -10px;
+}
+
+.divForm form div {
+    width: 90%;
+    text-align: start;
+    margin-bottom: 15px;
+    margin-left: 30px;
+    margin-right: 70px;
+}
+
+.divForm form div label {
+    font-size: 1.125rem;
+    margin-left: 15px;
+    color: #b3b3b3;
+    font-family: sans-serif;
+}
+
+.input {
+    font-size: 1.125rem;
+    border-color: #e5e5e5;
+    border-style: solid;
+    background-color: #e5e5e5;
+    width: 520px;
+    padding: 10px 12px;
+    border-radius: 50px;
+    border-width: 10px;
+}
+
+.input::placeholder {
+    color: #b3b3b3;
+    font-family: sans-serif;
+}
+
+.divForm form button {
+    border: 0;
+    padding: 27px;
+    border-radius: 50px;
+    width: 90%;
+    color: #eeeeee;
+    background-color: #00337C;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
+.divForm form button:hover {
+    background-color: #80C4E9;
+    color: #000000;
+}
+
+.opcao {
+    text-align: center;
+    padding: 10px 30px;
+    border-radius: 50px;
+    color: #FF204E;
+    margin: 1px 0;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-decoration: none;
+}

@@ -1,0 +1,32 @@
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    color: white;
+}
+
+.toast button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    margin-bottom: 5px;
+    margin-left: 100px;
+}
+
+.toast button:hover {
+    color: black;
+}
+
+.toast p {
+    margin: 0;
+}
+
+.danger {
+    background-color: #e74c3c;
+}
