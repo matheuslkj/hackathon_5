@@ -9,12 +9,23 @@ use Illuminate\Support\Facades\Hash;
 
 class ResponsavelController extends Controller
 {
+    /**
+     * Retorna todos os responsáveis.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $responsaveis = Responsavel::all();
         return response()->json($responsaveis, 200);
     }
 
+    /**
+     * Armazena um novo responsável.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -34,12 +45,25 @@ class ResponsavelController extends Controller
         return response()->json($responsavel, 201);
     }
 
+    /**
+     * Exibe um responsável específico.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         $responsavel = Responsavel::findOrFail($id);
         return response()->json($responsavel, 200);
     }
 
+    /**
+     * Atualiza um responsável existente.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -63,6 +87,12 @@ class ResponsavelController extends Controller
         return response()->json($responsavel, 200);
     }
 
+    /**
+     * Remove um responsável existente.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         $responsavel = Responsavel::findOrFail($id);
@@ -71,6 +101,12 @@ class ResponsavelController extends Controller
         return response()->json(null, 204);
     }
 
+    /**
+     * Autentica um responsável com base no CPF e senha.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $request->validate([

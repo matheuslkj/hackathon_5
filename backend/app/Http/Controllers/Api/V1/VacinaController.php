@@ -56,15 +56,20 @@ class VacinaController extends Controller
      * @param  \App\Models\Vacina  $vacina
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vacina $vacina)
+    public function update(Request $request, $id)
     {
+        // Valida os dados recebidos
         $request->validate([
-            'nome' => 'string|max:255',
-            'descricao' => 'string',
-            'doses_necessarias' => 'integer',
-            'data_campanha' => 'datetime'
+            'nome' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'doses_necessarias' => 'required|integer',
+            'data_campanha' => 'required|date',
         ]);
 
+        // Tenta encontrar a vacina pelo ID
+        $vacina = Vacina::findOrFail($id);
+
+        // Atualiza os dados da vacina
         $vacina->update($request->all());
 
         return response()->json($vacina, 200);
