@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\v1\ResponsavelController;
 use App\Http\Controllers\Api\v1\IdosoController;
 use App\Http\Controllers\Api\v1\ProfissionalSaudeController;
 use App\Http\Controllers\Api\v1\VacinaController;
+use App\Models\ProfissionalSaude;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('agendamentos', AgendamentoController::class);
     Route::apiResource('alertas', AlertaController::class);
     Route::post('responsavels/login', [ResponsavelController::class, 'login']);
+    Route::post('profissionais/login', [ProfissionalSaudeController::class, 'login']);
 });

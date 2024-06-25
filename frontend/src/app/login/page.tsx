@@ -7,19 +7,17 @@ import axios from 'axios'
 import { setCookie } from 'nookies'
 import { Loading } from '@/components/Loading'
 import { Toast } from '@/components/Toast'
-import InputMask, { InputState, Props as InputMaskProps } from 'react-input-mask'
+import InputMask from 'react-input-mask'
 
 export default function Login() {
-
     const router = useRouter()
     const refForm = useRef<HTMLFormElement>(null);
     const cpfInputRef = useRef<InputMask>(null);
     const [toast, setToast] = useState(false)
     const [toastMessage, setToastMessage] = useState('');
     const [loading, setLoading] = useState(false)
-    const [apiError, setApiError] = useState<string | null>(null); // Estado para armazenar erros da API
+    const [apiError, setApiError] = useState<string | null>(null);
 
-    
     const submitForm = useCallback((e: SyntheticEvent) => {
         e.preventDefault();
 
@@ -35,7 +33,7 @@ export default function Login() {
 
             console.log('Enviando dados:', { cpf, senha });
 
-            axios.post('http://127.0.0.1:8000/api/v1/profissionais',
+            axios.post('http://127.0.0.1:8000/api/v1/profissionais/login',
                 {
                     cpf: cpf,
                     senha: senha
@@ -52,6 +50,7 @@ export default function Login() {
                     )
                     router.push('/home')
                 } else {
+                    setToastMessage('Dados Inválidos');
                     setToast(true)
                 }
                 setLoading(false)
@@ -74,49 +73,48 @@ export default function Login() {
         }
     }, [router])
 
-
-    return(
+    return (
         <>
-        <Loading loading={loading} />
-        <Toast
-            show={toast}
-            message={apiError || 'Dados Inválidos'}
-            colors='danger'
-            onClose={() => {setToast(false); setApiError(null)}}
-        />
-        <section className={styles.secao}>
-            <div className={styles.div1}>
-                <div className={styles.div2}>
-                    <div className={styles.div3}>
-                        <span className={styles.span}>
-                            <Image className={styles.imagem} src="/images/cadeado.png" alt={'Cadeado'} width={80} height={100}/>
-                        </span>
-                        <h2>Faça seu Login</h2>
-                        <div className={styles.divForm}>
-                            <form
-                                noValidate
-                                onSubmit={submitForm}
-                                ref={refForm}
-                            >
-                                <div>
-                                    <label>CPF*</label>
-                                    <InputMask mask="999.999.999-99" type="text" placeholder="Digite seu CPF"
+            <Loading loading={loading} />
+            <Toast
+                show={toast}
+                message={apiError || 'Dados Inválidos'}
+                colors='danger'
+                onClose={() => { setToast(false); setApiError(null) }}
+            />
+            <section className={styles.secao}>
+                <div className={styles.div1}>
+                    <div className={styles.div2}>
+                        <div className={styles.div3}>
+                            <span className={styles.span}>
+                                <Image className={styles.imagem} src="/images/cadeado.png" alt={'Cadeado'} width={80} height={100} />
+                            </span>
+                            <h2>Faça seu Login</h2>
+                            <div className={styles.divForm}>
+                                <form
+                                    noValidate
+                                    onSubmit={submitForm}
+                                    ref={refForm}
+                                >
+                                    <div>
+                                        <label>CPF*</label>
+                                        <InputMask mask="999.999.999-99" type="text" placeholder="Digite seu CPF"
                                             name="cpf" className={styles.input} required ref={cpfInputRef}
                                         />
-                                </div>
-                                <div>
-                                    <label>Senha*</label>
-                                    <input type="password" placeholder="Digite sua Senha" name="senha" 
-                                    className={styles.input} required />
-                                </div>
-                                <button type='submit'>Login</button>
-                            </form>
+                                    </div>
+                                    <div>
+                                        <label>Senha*</label>
+                                        <input type="password" placeholder="Digite sua Senha" name="senha"
+                                            className={styles.input} required />
+                                    </div>
+                                    <button type='submit'>Login</button>
+                                </form>
+                            </div>
+                            <a href="#" className={styles.opcao}>Não tem uma conta? Cadastre-se</a>
                         </div>
-                        <a href="#" className={styles.opcao}>Não tem uma conta? Cadastre-se</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </>
     )
 }

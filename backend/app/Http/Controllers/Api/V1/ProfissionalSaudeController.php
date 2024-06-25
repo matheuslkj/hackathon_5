@@ -84,7 +84,6 @@ class ProfissionalSaudeController extends Controller
             return response()->json(['error' => 'Credenciais inválidas'], 401);
         }
 
-        // Se autenticado com sucesso, gere um token ou qualquer método de autenticação desejado
         $token = $profissionalSaude->createToken('authToken')->plainTextToken;
 
         return response()->json(['token' => $token], 200);
