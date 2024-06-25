@@ -1,16 +1,29 @@
 // src/components/Menu/index.tsx
-
-import style from './style.module.css';
-import Link from 'next/link';
-import { BsPersonHeart } from 'react-icons/bs';
-import { GoSignOut } from 'react-icons/go';
-import { IoMdPerson } from 'react-icons/io';
-import { RiCalendarScheduleFill } from 'react-icons/ri';
-import { TbVaccine } from 'react-icons/tb';
-import Image from 'next/image';
-
+"use client";
+import style from "./style.module.css";
+import Link from "next/link";
+import { BsPersonHeart } from "react-icons/bs";
+import { GoSignOut } from "react-icons/go";
+import { IoMdPerson } from "react-icons/io";
+import { RiCalendarScheduleFill } from "react-icons/ri";
+import { TbVaccine } from "react-icons/tb";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { logout } from "@/utils/auth";
+import { useEffect } from "react";
 
 export const Menu = () => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      logout();
+      router.push('/login');
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
+  };
+
   return (
     <body className={style.body}>
       <nav className={style.nav}>
@@ -19,7 +32,7 @@ export const Menu = () => {
             <Image
               className={style.image}
               src="/images/logo.png"
-              alt={'Logo'}
+              alt={"Logo"}
               width={150}
               height={150}
             />
@@ -55,7 +68,7 @@ export const Menu = () => {
           </ul>
         </div>
         <div className={style.divBotao}>
-          <button className={style.botaoLougout}>
+          <button className={style.botaoLogout} onClick={handleLogout}>
             <GoSignOut />
             <span>Logout</span>
           </button>
