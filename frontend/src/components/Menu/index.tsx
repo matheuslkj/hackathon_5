@@ -10,7 +10,6 @@ import { TbVaccine } from "react-icons/tb";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { logout } from "@/utils/auth";
-import { useEffect } from "react";
 
 export const Menu = () => {
   const router = useRouter();
@@ -36,9 +35,6 @@ export const Menu = () => {
               width={150}
               height={150}
             />
-            <p>
-              <span>Cargo</span>
-            </p>
           </div>
           <ul className={style.ul}>
             <li>
@@ -68,8 +64,8 @@ export const Menu = () => {
           </ul>
         </div>
         <div className={style.divBotao}>
-          <button className={style.botaoLogout} onClick={handleLogout}>
-            <GoSignOut />
+          <button className={style.botaoLougout} onClick={handleLogout}>
+            <GoSignOut /> 
             <span>Logout</span>
           </button>
         </div>
