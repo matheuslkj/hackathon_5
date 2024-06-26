@@ -8,7 +8,7 @@ export const getIdosos = async () => {
     const response = await axios.get(`${API_URL}/idosos`);
     return response.data;
   } catch (error) {
-    console.error('Erro ao buscar idosos:', error);
+    console.error('Erro ao buscar Idosos:', error);
     throw error;
   }
 };
@@ -18,7 +18,7 @@ export const getVacinas = async () => {
     const response = await axios.get(`${API_URL}/vacinas`);
     return response.data;
   } catch (error) {
-    console.error('Erro ao buscar vacinas:', error);
+    console.error('Erro ao buscar Vacinas:', error);
     throw error;
   }
 };
@@ -29,7 +29,7 @@ export const createVacina = async (data: any) => {
     const response = await axios.post(`${API_URL}/vacinas`, data);
     return response.data;
   } catch (error) {
-    console.error('Erro ao cadastrar vacina:', error);
+    console.error('Erro ao cadastrar Vacina:', error);
     throw error;
   }
 };
@@ -40,7 +40,7 @@ export const updateVacina = async (id: string, data: any) => {
       const response = await axios.put(`${API_URL}/vacinas/${id}`, data);
       return response.data;
     } catch (error) {
-      console.error('Erro ao atualizar vacina:', error);
+      console.error('Erro ao atualizar Vacina:', error);
       throw error;
     }
   };
@@ -50,7 +50,7 @@ export const deleteVacina = async (id: string) => {
   try {
     await axios.delete(`${API_URL}/vacinas/${id}`);
   } catch (error) {
-    console.error('Erro ao deletar vacina:', error);
+    console.error('Erro ao deletar Vacina:', error);
     throw error;
   }
 };
@@ -60,7 +60,7 @@ export const getResponsaveis = async () => {
       const response = await axios.get(`${API_URL}/responsavels`);
       return response.data;
     } catch (error) {
-      console.error('Erro ao buscar responsáveis:', error);
+      console.error('Erro ao buscar Responsáveis:', error);
       throw error;
     }
   };
@@ -70,7 +70,7 @@ export const getResponsaveis = async () => {
       const response = await axios.get(`${API_URL}/responsavels/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao buscar responsável com ID ${id}:`, error);
+      console.error(`Erro ao buscar Responsável com ID ${id}:`, error);
       throw error;
     }
   };
@@ -80,7 +80,7 @@ export const getResponsaveis = async () => {
       const response = await axios.post(`${API_URL}/responsavels`, responsavelData);
       return response.data;
     } catch (error) {
-      console.error('Erro ao cadastrar responsável:', error);
+      console.error('Erro ao cadastrar Responsável:', error);
       throw error;
     }
   };
@@ -90,7 +90,7 @@ export const getResponsaveis = async () => {
       const response = await axios.put(`${API_URL}/responsavels/${id}`, responsavelData);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao atualizar responsável com ID ${id}:`, error);
+      console.error(`Erro ao atualizar Responsável com ID ${id}:`, error);
       throw error;
     }
   };
@@ -99,7 +99,7 @@ export const getResponsaveis = async () => {
     try {
       await axios.delete(`${API_URL}/responsavels/${id}`);
     } catch (error) {
-      console.error('Erro ao deletar responsavels:', error);
+      console.error('Erro ao deletar Responsável:', error);
       throw error;
     }
   };
@@ -109,7 +109,7 @@ export const getResponsaveis = async () => {
       const response = await axios.get(`${API_URL}/idosos/${id}`);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao buscar idosos com ID ${id}:`, error);
+      console.error(`Erro ao buscar Idosos com ID ${id}:`, error);
       throw error;
     }
   };
@@ -119,7 +119,7 @@ export const getResponsaveis = async () => {
       const response = await axios.post(`${API_URL}/idosos`, idosoData);
       return response.data;
     } catch (error) {
-      console.error('Erro ao cadastrar idoso:', error);
+      console.error('Erro ao cadastrar Idoso:', error);
       throw error;
     }
   };
@@ -129,7 +129,7 @@ export const getResponsaveis = async () => {
       const response = await axios.put(`${API_URL}/idosos/${id}`, idosoData);
       return response.data;
     } catch (error) {
-      console.error(`Erro ao atualizar idoso com ID ${id}:`, error);
+      console.error(`Erro ao atualizar Idoso com ID ${id}:`, error);
       throw error;
     }
   };
@@ -138,7 +138,66 @@ export const getResponsaveis = async () => {
     try {
       await axios.delete(`${API_URL}/idosos/${id}`);
     } catch (error) {
-      console.error('Erro ao deletar idosos:', error);
+      console.error('Erro ao deletar Idosos:', error);
+      throw error;
+    }
+  };
+
+  export const getAgendamentos = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/agendamentos`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar Agendamentos:', error);
+      throw error;
+    }
+  };
+  
+  export const createAgendamento = async (agendamentoData: any) => {
+    try {
+      const response = await axios.post(`${API_URL}/agendamentos`, agendamentoData);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao cadastrar Agendamento:', error);
+      throw error;
+    }
+  };
+  
+  export const updateAgendamento = async (id: number, agendamentoData: any) => {
+    try {
+      const response = await axios.put(`${API_URL}/agendamentos/${id}`, agendamentoData);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao atualizar Agendamento com ID ${id}:`, error);
+      throw error;
+    }
+  };
+
+  export const deleteAgendamento = async (id: string) => {
+    try {
+      await axios.delete(`${API_URL}/agendamentos/${id}`);
+    } catch (error) {
+      console.error('Erro ao deletar Agendamento:', error);
+      throw error;
+    }
+  };
+
+  export const getProfissionais = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/profissionais`);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao buscar Profissionais:', error);
+      throw error;
+    }
+  };
+
+  export const getProfissional = async (id: number) => {
+    try {
+      const response = await axios.get(`${API_URL}/profissionais/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar Profissionais com ID ${id}:`, error);
       throw error;
     }
   };

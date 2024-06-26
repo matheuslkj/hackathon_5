@@ -30,7 +30,7 @@ const IdosoPage = () => {
         const data = await getIdosos();
         setIdosos(data);
       } catch (error) {
-        console.error('Erro ao buscar idosos:', error);
+        console.error('Erro ao buscar Idosos:', error);
       }
     };
 
