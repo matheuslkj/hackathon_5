@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BsPersonHeart } from "react-icons/bs";
 import { GoSignOut } from "react-icons/go";
 import { IoMdPerson } from "react-icons/io";
-import { RiCalendarScheduleFill } from "react-icons/ri";
+import { RiCalendarScheduleFill, RiHospitalFill } from "react-icons/ri";
 import { TbVaccine } from "react-icons/tb";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -38,27 +38,33 @@ export const Menu = () => {
           </div>
           <ul className={style.ul}>
             <li>
+              <Link href="/home">
+                <RiHospitalFill className={style.icone}/>
+                <span>Home</span>
+              </Link>
+            </li>
+            <li>
               <Link href="/vacinas">
                 <TbVaccine className={style.icone} />
-                <span>Vacina</span>
+                <span>Vacinas</span>
               </Link>
             </li>
             <li>
               <Link href="/idosos">
                 <IoMdPerson className={style.icone} />
-                <span>Idoso</span>
+                <span>Idosos</span>
               </Link>
             </li>
             <li>
               <Link href="/responsavels">
                 <BsPersonHeart className={style.icone} />
-                <span>Responsável</span>
+                <span>Responsáveis</span>
               </Link>
             </li>
             <li>
               <Link href="/agendamentos">
                 <RiCalendarScheduleFill className={style.icone} />
-                <span>Agendamento</span>
+                <span>Agendamentos</span>
               </Link>
             </li>
           </ul>
