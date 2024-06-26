@@ -4,6 +4,7 @@ import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
 import {  getIdosos, deleteIdoso, updateIdoso, createIdoso } from '../api/route'; // Importe as funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/idosos';
 
@@ -141,7 +142,7 @@ const IdosoPage = () => {
   return (
     <div className="container">
       <Menu />
-      <main className="main">
+      <main className="main" style={{marginLeft: '200px'}}>
         <h1 className="title">Idosos</h1>
         <button className="btn btn-primary mb-3" onClick={() => openModal(null)}>
           Cadastrar Idoso
@@ -156,10 +157,10 @@ const IdosoPage = () => {
               <p>Histórico Médico: {idoso.historico_medico}</p>
               <p>CPF: {idoso.cpf}</p>
               <button className="btn btn-secondary me-2" onClick={() => openModal(idoso)}>
-                Editar
+                <FaEdit size={20}/>
               </button>
               <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
-                Deletar
+                <FaTrashAlt size={20}/>
               </button>
             </li>
           ))}
@@ -263,4 +264,3 @@ const IdosoPage = () => {
 };
 
 export default IdosoPage;
-

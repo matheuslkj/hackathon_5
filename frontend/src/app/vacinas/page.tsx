@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
 import { getVacinas, createVacina, updateVacina, deleteVacina } from '../api/route'; // Importe as funções centralizadas
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';  
 
 const VacinaPage = () => {
   const [vacinas, setVacinas] = useState([]);
@@ -83,7 +84,7 @@ const VacinaPage = () => {
   return (
     <div className="container">
       <Menu />
-      <main className="main">
+      <main className="main" style={{maxWidth: '1000px', marginLeft: '210px'}}>
         <h1 className="title">Vacinas</h1>
         <button className="btn btn-primary mb-3" onClick={() => {
           setIsEditing(false);
@@ -106,10 +107,10 @@ const VacinaPage = () => {
               </div>
               <div className="d-grid gap-2 col-1.5 mx-auto">
                 <button className="btn btn-secondary" onClick={() => handleEdit(vacina)}>
-                  Editar
+                  <FaEdit />
                 </button>
                 <button className="btn btn-danger" onClick={() => handleDelete(vacina.id)}>
-                  Deletar
+                  <FaTrashAlt />
                 </button>
               </div>
             </li>

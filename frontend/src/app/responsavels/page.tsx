@@ -4,6 +4,7 @@ import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
 import { getResponsaveis, getIdosos, createResponsavel, updateResponsavel, deleteResponsavel } from '../api/route'; // Importe as funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/responsavels';
 
@@ -156,7 +157,7 @@ const ResponsavelPage = () => {
   return (
     <div className="container">
       <Menu />
-      <main className="main">
+      <main className="main" style={{marginLeft: '200px'}}>
         <h1 className="title">Responsáveis</h1>
         <button className="btn btn-primary mb-3" onClick={() => openModal(null)}>
           Cadastrar Responsável
@@ -172,10 +173,10 @@ const ResponsavelPage = () => {
                 Idoso Associado: {responsavel.idoso_id ? idosos.find((idoso) => idoso.id === responsavel.idoso_id)?.nome : 'Não especificado'}
               </p>
               <button className="btn btn-secondary me-2" onClick={() => openModal(responsavel)}>
-                Editar
+                <FaEdit size={20}/>
               </button>
               <button className="btn btn-danger" onClick={() => handleDelete(responsavel.id)}>
-                Deletar
+                <FaTrashAlt size={20}/>
               </button>
             </li>
           ))}
