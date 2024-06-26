@@ -2,90 +2,75 @@
 import { useState, useEffect } from 'react';
 import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
-import { getResponsaveis, getIdosos, createResponsavel, updateResponsavel, deleteResponsavel } from '../api/route'; // Importe as funções centralizadas
+import {  getIdosos, deleteIdoso, updateIdoso, createIdoso } from '../api/route'; // Importe as funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
 
-const API_URL = 'http://127.0.0.1:8000/api/v1/responsavels';
-
-interface Responsavel {
-  id: number;
-  nome: string;
-  cpf: string;
-  telefone: string;
-  endereco: string;
-  senha: string;
-  idoso_id: number;
-}
+const API_URL = 'http://127.0.0.1:8000/api/v1/idosos';
 
 interface Idoso {
   id: number;
   nome: string;
+  nascimento: string;
+  endereco: string;
+  telefone: string;
+  historico_medico: string;
+  cpf: string;
 }
 
-const ResponsavelPage = () => {
-  const [responsaveis, setResponsaveis] = useState<Responsavel[]>([]);
+
+const IdosoPage = () => {
   const [idosos, setIdosos] = useState<Idoso[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingResponsavelId, setEditingResponsavelId] = useState<number | null>(null);
+  const [editingIdosoId, setEditingIdosoId] = useState<number | null>(null);
   const [formData, setFormData] = useState({
     nome: '',
-    cpf: '',
-    telefone: '',
+    nascimento: '',
     endereco: '',
-    senha: '',
-    idoso_id: 0,
+    telefone: '',
+    historico_medico: '',
+    cpf: '',
   });
   const [formErrors, setFormErrors] = useState({
-    cpf: '',
     telefone: '',
+    cpf: '',
   });
 
   useEffect(() => {
-    const fetchResponsaveis = async () => {
-      try {
-        const data = await getResponsaveis();
-        setResponsaveis(data);
-      } catch (error) {
-        console.error('Erro ao buscar responsáveis:', error);
-      }
-    };
-
     const fetchIdosos = async () => {
       try {
         const data = await getIdosos();
-        setIdosos(data || []); // Certificar-se de que idosos seja inicializado como array vazio se data for null/undefined
+        setIdosos(data);
       } catch (error) {
         console.error('Erro ao buscar idosos:', error);
       }
     };
 
-    fetchResponsaveis();
     fetchIdosos();
   }, []);
 
-  const openModal = (responsavel: Responsavel | null) => {
-    if (responsavel) {
+  const openModal = (idoso: Idoso | null) => {
+    if (idoso) {
       setFormData({
-        nome: responsavel.nome,
-        cpf: responsavel.cpf,
-        telefone: responsavel.telefone,
-        endereco: responsavel.endereco,
-        senha: responsavel.senha,
-        idoso_id: responsavel.idoso_id || 0,
+        nome: idoso.nome,
+        nascimento: idoso.nascimento,
+        endereco: idoso.endereco,
+        telefone: idoso.telefone,
+        historico_medico: idoso.historico_medico,
+        cpf: idoso.cpf
       });
-      setEditingResponsavelId(responsavel.id);
+      setEditingIdosoId(idoso.id);
       setIsEditing(true);
     } else {
       setFormData({
         nome: '',
-        cpf: '',
-        telefone: '',
+        nascimento: '',
         endereco: '',
-        senha: '',
-        idoso_id: 0,
+        telefone: '',
+        historico_medico: '',
+        cpf: '',
       });
-      setEditingResponsavelId(null);
+      setEditingIdosoId(null);
       setIsEditing(false);
     }
     setIsModalOpen(true);
@@ -94,10 +79,10 @@ const ResponsavelPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setIsEditing(false);
-    setEditingResponsavelId(null);
+    setEditingIdosoId(null);
     setFormErrors({
-      cpf: '',
       telefone: '',
+      cpf: '',
     });
   };
 
@@ -130,14 +115,14 @@ const ResponsavelPage = () => {
     }
 
     try {
-      if (isEditing && editingResponsavelId) {
-        await updateResponsavel(editingResponsavelId, formData);
+      if (isEditing && editingIdosoId) {
+        await updateIdoso(editingIdosoId, formData);
       } else {
-        await createResponsavel(formData);
+        await createIdoso(formData);
       }
       closeModal();
-      const updatedResponsaveis = await getResponsaveis();
-      setResponsaveis(updatedResponsaveis);
+      const updatedIdosos = await getIdosos();
+      setIdosos(updatedIdosos);
     } catch (error) {
       console.error('Erro ao cadastrar ou atualizar responsável:', error);
     }
@@ -145,9 +130,9 @@ const ResponsavelPage = () => {
 
   const handleDelete = async (id: any) => {
     try {
-      await deleteResponsavel(id);
-      const updatedResponsaveis = await getResponsaveis();
-      setResponsaveis(updatedResponsaveis);
+      await deleteIdoso(id);
+      const updatedIdosos = await getIdosos();
+      setIdosos(updatedIdosos);
     } catch (error) {
       console.error('Erro ao deletar responsável:', error);
     }
@@ -157,24 +142,23 @@ const ResponsavelPage = () => {
     <div className="container">
       <Menu />
       <main className="main">
-        <h1 className="title">Responsáveis</h1>
+        <h1 className="title">Idosos</h1>
         <button className="btn btn-primary mb-3" onClick={() => openModal(null)}>
-          Cadastrar Responsável
+          Cadastrar Idoso
         </button>
         <ul className="list-group mb-3">
-          {responsaveis.map((responsavel) => (
-            <li key={responsavel.id} className="list-group-item">
-              <h2>{responsavel.nome}</h2>
-              <p>CPF: {responsavel.cpf}</p>
-              <p>Telefone: {responsavel.telefone}</p>
-              <p>Endereço: {responsavel.endereco}</p>
-              <p>
-                Idoso Associado: {responsavel.idoso_id ? idosos.find((idoso) => idoso.id === responsavel.idoso_id)?.nome : 'Não especificado'}
-              </p>
-              <button className="btn btn-secondary me-2" onClick={() => openModal(responsavel)}>
+          {idosos.map((idoso) => (
+            <li key={idoso.id} className="list-group-item">
+              <h2>{idoso.nome}</h2>
+              <p>Nascimento: {idoso.nascimento}</p>
+              <p>Endereço: {idoso.endereco}</p>
+              <p>Telefone: {idoso.telefone}</p>
+              <p>Histórico Médico: {idoso.historico_medico}</p>
+              <p>CPF: {idoso.cpf}</p>
+              <button className="btn btn-secondary me-2" onClick={() => openModal(idoso)}>
                 Editar
               </button>
-              <button className="btn btn-danger" onClick={() => handleDelete(responsavel.id)}>
+              <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
                 Deletar
               </button>
             </li>
@@ -187,7 +171,7 @@ const ResponsavelPage = () => {
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">{isEditing ? 'Editar Responsável' : 'Cadastrar Responsável'}</h5>
+                <h5 className="modal-title">{isEditing ? 'Editar Idoso' : 'Cadastrar Idoso'}</h5>
                 <button type="button" className="btn-close" aria-label="Close" onClick={closeModal}>
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -207,17 +191,26 @@ const ResponsavelPage = () => {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="cpf">CPF:</label>
-                    <input
-                      type="text"
+                    <label htmlFor="nascimento">Nascimento:</label>
+                    <textarea
                       className="form-control"
-                      id="cpf"
-                      name="cpf"
-                      value={formData.cpf}
+                      id="nascimento"
+                      name="nascimento"
+                      value={formData.nascimento}
                       onChange={handleInputChange}
                       required
                     />
-                    {formErrors.cpf && <div className="text-danger">{formErrors.cpf}</div>}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="endereco">Endereço:</label>
+                    <textarea
+                      className="form-control"
+                      id="endereco"
+                      name="endereco"
+                      value={formData.endereco}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
                   <div className="form-group">
                     <label htmlFor="telefone">Telefone:</label>
@@ -233,48 +226,29 @@ const ResponsavelPage = () => {
                     {formErrors.telefone && <div className="text-danger">{formErrors.telefone}</div>}
                   </div>
                   <div className="form-group">
-                    <label htmlFor="endereco">Endereço:</label>
+                    <label htmlFor="historico_medico">Histórico Médico:</label>
                     <textarea
                       className="form-control"
-                      id="endereco"
-                      name="endereco"
-                      value={formData.endereco}
+                      id="historico_medico"
+                      name="historico_medico"
+                      value={formData.historico_medico}
                       onChange={handleInputChange}
                       required
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="idoso_id">Idoso Associado:</label>
-                    <select
+                    <label htmlFor="cpf">CPF:</label>
+                    <input
+                      type="text"
                       className="form-control"
-                      id="idoso_id"
-                      name="idoso_id"
-                      value={formData.idoso_id}
-                      onChange={handleSelectChange}
+                      id="cpf"
+                      name="cpf"
+                      value={formData.cpf}
+                      onChange={handleInputChange}
                       required
-                    >
-                      <option value={0}>Selecione um idoso</option>
-                      {idosos.map((idoso) => (
-                        <option key={idoso.id} value={idoso.id}>
-                          {idoso.nome}
-                        </option>
-                      ))}
-                    </select>
+                    />
+                    {formErrors.cpf && <div className="text-danger">{formErrors.cpf}</div>}
                   </div>
-                  {!isEditing && ( // Não exibir campo de senha ao editar responsável
-                    <div className="form-group">
-                      <label htmlFor="senha">Senha:</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="senha"
-                        name="senha"
-                        value={formData.senha}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                  )}
                   <button type="submit" className="btn btn-primary">
                     {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
                   </button>
@@ -288,5 +262,5 @@ const ResponsavelPage = () => {
   );
 };
 
-export default ResponsavelPage;
+export default IdosoPage;
 

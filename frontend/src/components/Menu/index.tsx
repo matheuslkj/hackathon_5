@@ -33,8 +33,8 @@ export const Menu = () => {
               className={style.image}
               src="/images/logo.png"
               alt={"Logo"}
-              width={150}
-              height={150}
+              width={180}
+              height={180}
             />
             <p>
               <span>Cargo</span>

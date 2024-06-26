@@ -103,5 +103,43 @@ export const getResponsaveis = async () => {
       throw error;
     }
   };
+  
+  export const getIdoso = async (id: number) => {
+    try {
+      const response = await axios.get(`${API_URL}/idosos/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao buscar idosos com ID ${id}:`, error);
+      throw error;
+    }
+  };
+  
+  export const createIdoso = async (idosoData: any) => {
+    try {
+      const response = await axios.post(`${API_URL}/idosos`, idosoData);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao cadastrar idoso:', error);
+      throw error;
+    }
+  };
+  
+  export const updateIdoso = async (id: number, idosoData: any) => {
+    try {
+      const response = await axios.put(`${API_URL}/idosos/${id}`, idosoData);
+      return response.data;
+    } catch (error) {
+      console.error(`Erro ao atualizar idoso com ID ${id}:`, error);
+      throw error;
+    }
+  };
 
+  export const deleteIdoso = async (id: string) => {
+    try {
+      await axios.delete(`${API_URL}/idosos/${id}`);
+    } catch (error) {
+      console.error('Erro ao deletar idosos:', error);
+      throw error;
+    }
+  };
 // Defina outras funções para outros endpoints da API (responsáveis, idosos, profissionais, agendamentos, etc.)
