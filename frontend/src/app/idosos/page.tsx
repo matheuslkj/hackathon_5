@@ -1,29 +1,17 @@
+// src/pages/idosos/page.tsx
+
 "use client";
 import { useState, useEffect } from 'react';
 import { Menu } from '@/components/Menu';
-import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
-import {  getIdosos, deleteIdoso, updateIdoso, createIdoso } from '../api/route'; // Importe as funções centralizadas
+import { getIdosos, createIdoso, updateIdoso, deleteIdoso } from '../api/route'; // Importação das funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
-const API_URL = 'http://127.0.0.1:8000/api/v1/idosos';
-
-interface Idoso {
-  id: number;
-  nome: string;
-  nascimento: string;
-  endereco: string;
-  telefone: string;
-  historico_medico: string;
-  cpf: string;
-}
-
-
 const IdosoPage = () => {
-  const [idosos, setIdosos] = useState<Idoso[]>([]);
+  const [idosos, setIdosos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingIdosoId, setEditingIdosoId] = useState<number | null>(null);
+  const [currentIdosoId, setCurrentIdosoId] = useState<number | null>(null); // Ajuste aqui para number
   const [formData, setFormData] = useState({
     nome: '',
     nascimento: '',
@@ -43,49 +31,12 @@ const IdosoPage = () => {
         const data = await getIdosos();
         setIdosos(data);
       } catch (error) {
-        console.error('Erro ao buscar idosos:', error);
+        console.error('Erro ao buscar Idosos:', error);
       }
     };
 
     fetchIdosos();
   }, []);
-
-  const openModal = (idoso: Idoso | null) => {
-    if (idoso) {
-      setFormData({
-        nome: idoso.nome,
-        nascimento: idoso.nascimento,
-        endereco: idoso.endereco,
-        telefone: idoso.telefone,
-        historico_medico: idoso.historico_medico,
-        cpf: idoso.cpf
-      });
-      setEditingIdosoId(idoso.id);
-      setIsEditing(true);
-    } else {
-      setFormData({
-        nome: '',
-        nascimento: '',
-        endereco: '',
-        telefone: '',
-        historico_medico: '',
-        cpf: '',
-      });
-      setEditingIdosoId(null);
-      setIsEditing(false);
-    }
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setIsEditing(false);
-    setEditingIdosoId(null);
-    setFormErrors({
-      telefone: '',
-      cpf: '',
-    });
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -93,11 +44,6 @@ const IdosoPage = () => {
 
     // Limpar erros quando o usuário começa a digitar novamente
     setFormErrors({ ...formErrors, [name]: '' });
-  };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: parseInt(value) });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -116,26 +62,50 @@ const IdosoPage = () => {
     }
 
     try {
-      if (isEditing && editingIdosoId) {
-        await updateIdoso(editingIdosoId, formData);
+      if (isEditing && currentIdosoId !== null) {
+        await updateIdoso(currentIdosoId, formData); // currentIdosoId é number aqui
       } else {
         await createIdoso(formData);
       }
-      closeModal();
+      setIsModalOpen(false);
+      setIsEditing(false);
+      setCurrentIdosoId(null);
+      setFormData({
+        nome: '',
+        nascimento: '',
+        endereco: '',
+        telefone: '',
+        historico_medico: '',
+        cpf: '',
+      }); // Resetando o formData para os valores iniciais
       const updatedIdosos = await getIdosos();
       setIdosos(updatedIdosos);
     } catch (error) {
-      console.error('Erro ao cadastrar ou atualizar responsável:', error);
+      console.error('Erro ao cadastrar ou atualizar idoso:', error);
     }
   };
 
-  const handleDelete = async (id: any) => {
+  const handleEdit = (idoso: any) => {
+    setFormData({
+      nome: idoso.nome,
+      nascimento: idoso.nascimento.split('T')[0], // Ajuste para data no formato correto
+      endereco: idoso.endereco,
+      telefone: idoso.telefone,
+      historico_medico: idoso.historico_medico,
+      cpf: idoso.cpf,
+    });
+    setCurrentIdosoId(idoso.id); // id deve ser number
+    setIsEditing(true);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: number) => { // id é number
     try {
-      await deleteIdoso(id);
+      await deleteIdoso(id.toString());
       const updatedIdosos = await getIdosos();
       setIdosos(updatedIdosos);
     } catch (error) {
-      console.error('Erro ao deletar responsável:', error);
+      console.error('Erro ao deletar idoso:', error);
     }
   };
 
@@ -144,24 +114,39 @@ const IdosoPage = () => {
       <Menu />
       <main className="main" style={{marginLeft: '200px'}}>
         <h1 className="title">Idosos</h1>
-        <button className="btn btn-primary mb-3" onClick={() => openModal(null)}>
+        <button className="btn btn-primary mb-3" onClick={() => {
+          setIsEditing(false);
+          setFormData({
+            nome: '',
+            nascimento: '',
+            endereco: '',
+            telefone: '',
+            historico_medico: '',
+            cpf: '',
+          });
+          setIsModalOpen(true);
+        }}>
           Cadastrar Idoso
         </button>
         <ul className="list-group mb-3">
-          {idosos.map((idoso) => (
-            <li key={idoso.id} className="list-group-item">
-              <h2>{idoso.nome}</h2>
-              <p>Nascimento: {idoso.nascimento}</p>
-              <p>Endereço: {idoso.endereco}</p>
-              <p>Telefone: {idoso.telefone}</p>
-              <p>Histórico Médico: {idoso.historico_medico}</p>
-              <p>CPF: {idoso.cpf}</p>
-              <button className="btn btn-secondary me-2" onClick={() => openModal(idoso)}>
-                <FaEdit size={20}/>
-              </button>
-              <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
-                <FaTrashAlt size={20}/>
-              </button>
+          {idosos.map((idoso: any) => (
+            <li key={idoso.id} className="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <h2>{idoso.nome}</h2>
+                <p>Nascimento: {idoso.nascimento}</p>
+                <p>Endereço: {idoso.endereco}</p>
+                <p>Telefone: {idoso.telefone}</p>
+                <p>Histórico Médico: {idoso.historico_medico}</p>
+                <p>CPF: {idoso.cpf}</p>
+              </div>
+              <div className="d-grid gap-2 col-1.5 mx-auto">
+                <button className="btn btn-secondary" onClick={() => handleEdit(idoso)}>
+                  <FaEdit size={20}/>
+                </button>
+                <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
+                  <FaTrashAlt size={20}/>
+                </button>
+              </div>
             </li>
           ))}
         </ul>
@@ -173,7 +158,7 @@ const IdosoPage = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{isEditing ? 'Editar Idoso' : 'Cadastrar Idoso'}</h5>
-                <button type="button" className="btn-close" aria-label="Close" onClick={closeModal}>
+                <button type="button" className="btn-close" aria-label="Close" onClick={() => setIsModalOpen(false)}>
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -193,7 +178,8 @@ const IdosoPage = () => {
                   </div>
                   <div className="form-group">
                     <label htmlFor="nascimento">Nascimento:</label>
-                    <textarea
+                    <input
+                      type="date"
                       className="form-control"
                       id="nascimento"
                       name="nascimento"
@@ -250,6 +236,7 @@ const IdosoPage = () => {
                     />
                     {formErrors.cpf && <div className="text-danger">{formErrors.cpf}</div>}
                   </div>
+                  <br />
                   <button type="submit" className="btn btn-primary">
                     {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
                   </button>

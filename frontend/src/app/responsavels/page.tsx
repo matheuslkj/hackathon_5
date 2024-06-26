@@ -34,7 +34,7 @@ const ResponsavelPage = () => {
     cpf: '',
     telefone: '',
     endereco: '',
-    senha: '',
+    senha:'',
     idoso_id: 0,
   });
   const [formErrors, setFormErrors] = useState({
@@ -48,7 +48,7 @@ const ResponsavelPage = () => {
         const data = await getResponsaveis();
         setResponsaveis(data);
       } catch (error) {
-        console.error('Erro ao buscar responsáveis:', error);
+        console.error('Erro ao buscar Responsáveis:', error);
       }
     };
 
@@ -57,7 +57,7 @@ const ResponsavelPage = () => {
         const data = await getIdosos();
         setIdosos(data || []); // Certificar-se de que idosos seja inicializado como array vazio se data for null/undefined
       } catch (error) {
-        console.error('Erro ao buscar idosos:', error);
+        console.error('Erro ao buscar Idosos:', error);
       }
     };
 
@@ -83,7 +83,7 @@ const ResponsavelPage = () => {
         cpf: '',
         telefone: '',
         endereco: '',
-        senha: '',
+        senha:'',
         idoso_id: 0,
       });
       setEditingResponsavelId(null);
@@ -140,7 +140,7 @@ const ResponsavelPage = () => {
       const updatedResponsaveis = await getResponsaveis();
       setResponsaveis(updatedResponsaveis);
     } catch (error) {
-      console.error('Erro ao cadastrar ou atualizar responsável:', error);
+      console.error('Erro ao cadastrar ou atualizar Responsável:', error);
     }
   };
 
@@ -150,7 +150,7 @@ const ResponsavelPage = () => {
       const updatedResponsaveis = await getResponsaveis();
       setResponsaveis(updatedResponsaveis);
     } catch (error) {
-      console.error('Erro ao deletar responsável:', error);
+      console.error('Erro ao deletar Responsável:', error);
     }
   };
 
@@ -263,31 +263,32 @@ const ResponsavelPage = () => {
                     </select>
                   </div>
                   {!isEditing && ( // Não exibir campo de senha ao editar responsável
-                    <div className="form-group">
-                      <label htmlFor="senha">Senha:</label>
-                      <input
-                        type="password"
-                        className="form-control"
-                        id="senha"
-                        name="senha"
-                        value={formData.senha}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                  )}
-                  <button type="submit" className="btn btn-primary">
-                    {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default ResponsavelPage;
-
+                                       <div className="form-group">
+                                       <label htmlFor="senha">Senha:</label>
+                                       <input
+                                         type="password"
+                                         className="form-control"
+                                         id="senha"
+                                         name="senha"
+                                         value={formData.senha}
+                                         onChange={handleInputChange}
+                                         required
+                                       />
+                                     </div>
+                                   )}
+                                   <br />
+                                   <button type="submit" className="btn btn-primary">
+                                     {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
+                                   </button>
+                                 </form>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                       )}
+                     </div>
+                   );
+                 };
+                 
+                 export default ResponsavelPage;
+                 

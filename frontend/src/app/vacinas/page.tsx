@@ -23,7 +23,7 @@ const VacinaPage = () => {
         const data = await getVacinas();
         setVacinas(data);
       } catch (error) {
-        console.error('Erro ao buscar vacinas:', error);
+        console.error('Erro ao buscar Vacinas:', error);
       }
     };
 
@@ -55,7 +55,7 @@ const VacinaPage = () => {
       const updatedVacinas = await getVacinas();
       setVacinas(updatedVacinas);
     } catch (error) {
-      console.error('Erro ao cadastrar ou atualizar vacina:', error);
+      console.error('Erro ao cadastrar ou atualizar Vacina:', error);
     }
   };
 
@@ -77,7 +77,7 @@ const VacinaPage = () => {
       const updatedVacinas = await getVacinas();
       setVacinas(updatedVacinas);
     } catch (error) {
-      console.error('Erro ao deletar vacina:', error);
+      console.error('Erro ao deletar Vacina:', error);
     }
   };
 
