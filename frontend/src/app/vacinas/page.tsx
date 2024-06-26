@@ -63,7 +63,7 @@ const VacinaPage = () => {
       nome: vacina.nome,
       descricao: vacina.descricao,
       doses_necessarias: vacina.doses_necessarias,
-      data_campanha: vacina.data_campanha,
+      data_campanha: vacina.data_campanha ? vacina.data_campanha.split('T')[0] : '',
     });
     setCurrentVacinaId(vacina.id);
     setIsEditing(true);
@@ -104,8 +104,8 @@ const VacinaPage = () => {
                 <h2>{vacina.nome}</h2>
                 <p>{vacina.descricao}</p>
               </div>
-              <div>
-                <button className="btn btn-secondary mr-2" onClick={() => handleEdit(vacina)}>
+              <div className="d-grid gap-2 col-1.5 mx-auto">
+                <button className="btn btn-secondary" onClick={() => handleEdit(vacina)}>
                   Editar
                 </button>
                 <button className="btn btn-danger" onClick={() => handleDelete(vacina.id)}>
@@ -176,6 +176,7 @@ const VacinaPage = () => {
                       required
                     />
                   </div>
+                  <br />
                   <button type="submit" className="btn btn-primary">
                     {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
                   </button>
