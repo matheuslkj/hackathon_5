@@ -42,7 +42,7 @@ const IdosoPage = () => {
         const data = await getIdosos();
         setIdosos(data);
       } catch (error) {
-        console.error('Erro ao buscar idosos:', error);
+        console.error('Erro ao buscar Idosos:', error);
       }
     };
 
@@ -124,7 +124,7 @@ const IdosoPage = () => {
       const updatedIdosos = await getIdosos();
       setIdosos(updatedIdosos);
     } catch (error) {
-      console.error('Erro ao cadastrar ou atualizar responsável:', error);
+      console.error('Erro ao cadastrar ou atualizar Idoso:', error);
     }
   };
 
@@ -134,7 +134,7 @@ const IdosoPage = () => {
       const updatedIdosos = await getIdosos();
       setIdosos(updatedIdosos);
     } catch (error) {
-      console.error('Erro ao deletar responsável:', error);
+      console.error('Erro ao deletar Idoso:', error);
     }
   };
 
