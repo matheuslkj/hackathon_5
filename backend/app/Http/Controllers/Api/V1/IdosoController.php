@@ -20,16 +20,16 @@ class IdosoController extends Controller
         $request->validate([
             'nome' => 'required|string|max:255',
             'nascimento' => 'required|date',
-            'endereco'  => 'required|string',
+            'endereco' => 'required|string',
             'telefone' => 'required|string|max:20',
-            'historico_medica' => 'required|string',
+            'historico_medico' => 'required|string', 
             'cpf' => 'required|string|unique:idosos,cpf'
         ]);
-
+    
         $data = $request->all();
         
         $idoso = Idoso::create($data);
-
+    
         return response()->json($idoso, 201);
     }
 
