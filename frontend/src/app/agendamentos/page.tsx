@@ -7,6 +7,7 @@ import validator from 'validator'; // Importar validator para validar CPF e tele
 import { useRouter } from 'next/navigation';
 import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
 import { parseCookies } from 'nookies';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/agendamentos';
 
@@ -203,10 +204,10 @@ const AgendamentoPage = () => {
                             <p>Data: {formatDate(agendamento.data_hora)}</p>
                             <p>Status: {agendamento.status}</p>
                             <button className="btn btn-secondary me-2" onClick={() => openModal(agendamento)}>
-                                Editar
+                                <FaEdit size={20}/>
                             </button>
                             <button className="btn btn-danger" onClick={() => handleDelete(agendamento.id)}>
-                                Deletar
+                                <FaTrashAlt size={20}/>
                             </button>
                         </li>
                     ))}

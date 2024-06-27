@@ -3,7 +3,6 @@
     background-size: cover;
     background-position: 100% 90%;
     overflow: hidden;
-    max-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +33,6 @@
 
 .div3 h2 {
     font-size: 40px;
-    margin: 26px auto 0;
     font-family: sans-serif;
 }
 
@@ -56,8 +54,8 @@
 }
 
 .divForm {
+    margin-top: 5px;
     width: 570px;
-    margin: 35px auto 0;
 }
 
 .divForm form {
@@ -70,7 +68,7 @@
 .divForm form div {
     width: 90%;
     text-align: start;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     margin-left: 30px;
     margin-right: 70px;
 }
@@ -87,7 +85,7 @@
     border-color: #e5e5e5;
     border-style: solid;
     background-color: #e5e5e5;
-    width: 100%;
+    width: 108%;
     padding: 10px 12px;
     border-radius: 50px;
     border-width: 1px;
@@ -112,6 +110,7 @@
     letter-spacing: .2rem;
     margin-left: 30px;
     margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .divForm form button:hover {
@@ -121,6 +120,7 @@
 
 .opcao {
     text-align: center;
+    text-decoration: none;
     padding: 10px 30px;
     border-radius: 50px;
     color: #FF204E;

@@ -8,6 +8,7 @@ import validator from 'validator'; // Importar validator para validar CPF e tele
 import { useRouter } from 'next/navigation';
 import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
 import { parseCookies } from 'nookies';
+import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 const IdosoPage = () => {
   const [idosos, setIdosos] = useState([]);
@@ -162,10 +163,10 @@ const IdosoPage = () => {
               </div>
               <div className="d-grid gap-2 col-1.5 mx-auto">
                 <button className="btn btn-secondary" onClick={() => handleEdit(idoso)}>
-                  Editar
+                  <FaEdit size={20}/>
                 </button>
                 <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
-                  Deletar
+                  <FaTrashAlt size={20}/>
                 </button>
               </div>
             </li>
