@@ -30,6 +30,11 @@ const VacinaPage = () => {
     fetchVacinas();
   }, []);
 
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('pt-BR', options);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -51,7 +56,7 @@ const VacinaPage = () => {
         descricao: '',
         doses_necessarias: 1,
         data_campanha: '',
-      }); // Resetando o formData para os valores iniciais
+      }); 
       const updatedVacinas = await getVacinas();
       setVacinas(updatedVacinas);
     } catch (error) {
@@ -103,7 +108,9 @@ const VacinaPage = () => {
             <li key={vacina.id} className="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h2>{vacina.nome}</h2>
-                <p>{vacina.descricao}</p>
+                <p>Descrição: {vacina.descricao}</p>
+                <p>Doses Necessarias: {vacina.doses_necessarias}</p>
+                <p>Data da Campanha: {formatDate(vacina.data_campanha)}</p>
               </div>
               <div className="d-grid gap-2 col-1.5 mx-auto">
                 <button className="btn btn-secondary" onClick={() => handleEdit(vacina)}>

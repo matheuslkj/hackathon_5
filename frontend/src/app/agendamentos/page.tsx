@@ -91,13 +91,18 @@ const AgendamentoPage = () => {
         fetchIdosos();
     }, []);
 
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return new Date(dateString).toLocaleDateString('pt-BR', options);
+      };
+      
     const openModal = (agendamento: Agendamento | null) => {
         if (agendamento) {
             setFormData({
                 responsavel_id: agendamento.responsavel_id,
                 profissional_saude_id: agendamento.profissional_saude_id,
                 idoso_id: agendamento.idoso_id,
-                data_hora: agendamento.data_hora,
+                data_hora: agendamento.data_hora.split('T')[0],
                 status: agendamento.status,
             });
             setEditingAgendamentoId(agendamento.id);
@@ -179,7 +184,7 @@ const AgendamentoPage = () => {
                             <p>
                                 Idoso Associado: {agendamento.idoso_id ? idosos.find((idoso) => idoso.id === agendamento.idoso_id)?.nome : 'Não especificado'}
                             </p>
-                            <p>Data: {agendamento.data_hora}</p>
+                            <p>Data: {formatDate(agendamento.data_hora)}</p>
                             <p>Status: {agendamento.status}</p>
                             <button className="btn btn-secondary me-2" onClick={() => openModal(agendamento)}>
                                 <FaEdit size={20}/>
@@ -261,7 +266,7 @@ const AgendamentoPage = () => {
                                     <div className="form-group">
                                         <label htmlFor="data_hora">Data:</label>
                                         <input
-                                            type="text"
+                                            type="date"
                                             className="form-control"
                                             id="data_hora"
                                             name="data_hora"

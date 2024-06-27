@@ -38,6 +38,11 @@ const IdosoPage = () => {
     fetchIdosos();
   }, []);
 
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString('pt-BR', options);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -88,7 +93,7 @@ const IdosoPage = () => {
   const handleEdit = (idoso: any) => {
     setFormData({
       nome: idoso.nome,
-      nascimento: idoso.nascimento.split('T')[0], // Ajuste para data no formato correto
+      nascimento: idoso.nascimento.split('T')[0],
       endereco: idoso.endereco,
       telefone: idoso.telefone,
       historico_medico: idoso.historico_medico,
@@ -133,7 +138,7 @@ const IdosoPage = () => {
             <li key={idoso.id} className="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <h2>{idoso.nome}</h2>
-                <p>Nascimento: {idoso.nascimento}</p>
+                <p>Nascimento: {formatDate(idoso.nascimento)}</p>
                 <p>Endereço: {idoso.endereco}</p>
                 <p>Telefone: {idoso.telefone}</p>
                 <p>Histórico Médico: {idoso.historico_medico}</p>

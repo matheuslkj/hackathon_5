@@ -2,11 +2,12 @@
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 1050;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    color: white;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
 .toast button {
@@ -27,6 +28,10 @@
     margin: 0;
 }
 
-.danger {
-    background-color: #e74c3c;
+.toast.success {
+    background-color: #28a745;
+}
+
+.toast.danger {
+    background-color: #dc3545;
 }
