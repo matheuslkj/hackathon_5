@@ -4,7 +4,9 @@ import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
 import { createAgendamento, deleteAgendamento, getAgendamentos, getIdosos, getProfissionais, getResponsaveis, updateAgendamento } from '../api/route'; // Importe as funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
+import { parseCookies } from 'nookies';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/agendamentos';
 
@@ -47,6 +49,20 @@ const AgendamentoPage = () => {
         data_hora: '',
         status: '',
     });
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = parseCookies()['vacithon.token'];
+    
+        const authenticated = isAuthenticated();
+    
+        const isExpired = verificaTokenExpirado(token);
+
+    if (!isAuthenticated || isExpired) {
+        router.push('/login');
+      }
+    }, [router]);
 
     useEffect(() => {
         const fetchAgendamentos = async () => {
@@ -182,10 +198,10 @@ const AgendamentoPage = () => {
                             <p>Data: {agendamento.data_hora}</p>
                             <p>Status: {agendamento.status}</p>
                             <button className="btn btn-secondary me-2" onClick={() => openModal(agendamento)}>
-                                <FaEdit size={20}/>
+                                Editar
                             </button>
                             <button className="btn btn-danger" onClick={() => handleDelete(agendamento.id)}>
-                                <FaTrashAlt size={20}/>
+                                Deletar
                             </button>
                         </li>
                     ))}
@@ -282,7 +298,6 @@ const AgendamentoPage = () => {
                                             required
                                         />
                                     </div>
-                                    <br />
                                     <button type="submit" className="btn btn-primary">
                                         {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
                                     </button>
