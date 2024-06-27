@@ -4,6 +4,9 @@ import { Menu } from '@/components/Menu';
 import Modal from '@/components/Modal'; // Importe o componente Modal personalizado se necessário
 import { getVacinas, createVacina, updateVacina, deleteVacina } from '../api/route'; // Importe as funções centralizadas
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';  
+import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
+import { useRouter } from 'next/navigation';
+import { parseCookies } from 'nookies';
 
 const VacinaPage = () => {
   const [vacinas, setVacinas] = useState([]);
@@ -16,6 +19,20 @@ const VacinaPage = () => {
     doses_necessarias: 1,
     data_campanha: '',
   });
+
+  const router = useRouter();
+
+    useEffect(() => {
+        const token = parseCookies()['vacithon.token'];
+    
+        const authenticated = isAuthenticated();
+    
+        const isExpired = verificaTokenExpirado(token);
+
+    if (!isAuthenticated || isExpired) {
+        router.push('/login');
+      }
+    }, [router]);
 
   useEffect(() => {
     const fetchVacinas = async () => {

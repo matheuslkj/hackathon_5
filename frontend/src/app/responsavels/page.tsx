@@ -5,6 +5,9 @@ import Modal from '@/components/Modal'; // Importe o componente Modal personaliz
 import { getResponsaveis, getIdosos, createResponsavel, updateResponsavel, deleteResponsavel } from '../api/route'; // Importe as funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
+import { parseCookies } from 'nookies';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/responsavels';
 
@@ -41,6 +44,20 @@ const ResponsavelPage = () => {
     cpf: '',
     telefone: '',
   });
+
+  const router = useRouter();
+
+    useEffect(() => {
+        const token = parseCookies()['vacithon.token'];
+    
+        const authenticated = isAuthenticated();
+    
+        const isExpired = verificaTokenExpirado(token);
+
+    if (!isAuthenticated || isExpired) {
+        router.push('/login');
+      }
+    }, [router]);
 
   useEffect(() => {
     const fetchResponsaveis = async () => {

@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import { Menu } from '@/components/Menu';
 import { getIdosos, createIdoso, updateIdoso, deleteIdoso } from '../api/route'; // Importação das funções centralizadas
 import validator from 'validator'; // Importar validator para validar CPF e telefone
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { isAuthenticated, verificaTokenExpirado } from '@/utils/auth';
+import { parseCookies } from 'nookies';
 
 const IdosoPage = () => {
   const [idosos, setIdosos] = useState([]);
@@ -24,6 +26,20 @@ const IdosoPage = () => {
     telefone: '',
     cpf: '',
   });
+
+  const router = useRouter();
+
+    useEffect(() => {
+        const token = parseCookies()['vacithon.token'];
+    
+        const authenticated = isAuthenticated();
+    
+        const isExpired = verificaTokenExpirado(token);
+
+    if (!isAuthenticated || isExpired) {
+        router.push('/login');
+      }
+    }, [router]);
 
   useEffect(() => {
     const fetchIdosos = async () => {
@@ -146,10 +162,10 @@ const IdosoPage = () => {
               </div>
               <div className="d-grid gap-2 col-1.5 mx-auto">
                 <button className="btn btn-secondary" onClick={() => handleEdit(idoso)}>
-                  <FaEdit size={20}/>
+                  Editar
                 </button>
                 <button className="btn btn-danger" onClick={() => handleDelete(idoso.id)}>
-                  <FaTrashAlt size={20}/>
+                  Deletar
                 </button>
               </div>
             </li>
@@ -241,7 +257,6 @@ const IdosoPage = () => {
                     />
                     {formErrors.cpf && <div className="text-danger">{formErrors.cpf}</div>}
                   </div>
-                  <br />
                   <button type="submit" className="btn btn-primary">
                     {isEditing ? 'Salvar Alterações' : 'Cadastrar'}
                   </button>
